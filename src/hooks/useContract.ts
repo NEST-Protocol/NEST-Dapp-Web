@@ -2,6 +2,10 @@ import { Contract } from '@ethersproject/contracts'
 
 import ERC20_ABI from '../abis/erc20.json'
 import NestOpenPlatform_ABI from '../abis/nestOpenPlatform.json'
+import NNIcome_ABI from '../abis/nnincome_abi.json'
+import Redeeming_ABI from '../abis/redeeming_abi.json'
+import Price_ABI from '../abis/price_abi.json'
+import Nest_ABI from '../abis/nest_abi.json'
 
 import { useActiveWeb3React } from './web3'
 import { getContract } from '../utils'
@@ -37,4 +41,20 @@ export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: b
 
 export function useNestOpenPlatformContract(address: string, withSignerIfPossible?: boolean): Contract | null {
   return useContract<NestOpenPlatform>(address, NestOpenPlatform_ABI, withSignerIfPossible)
+}
+
+export function useNNIncomeContract(address: string, withSigner = true): Contract | undefined {
+  return useContract<any>(address, NNIcome_ABI, withSigner)
+}
+
+export function useRedeemingContract(address: string, withSigner = true): Contract | undefined {
+  return useContract<any>(address, Redeeming_ABI, withSigner)
+}
+
+export function usePricingContract(address: string, withSigner = true): Contract | undefined {
+  return useContract<any>(address, Price_ABI, withSigner)
+}
+
+export function useNestContract(address: string, withSigner = true): Contract | undefined {
+  return useContract<any>(address, Nest_ABI, withSigner)
 }

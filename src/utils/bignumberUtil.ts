@@ -27,6 +27,7 @@ export const parseToBigNumber = (n: BigNumberish | BigNumber) => {
 
 // decimals 为代币精度，formatPrecision 为显示精度
 export const formatNumber = (n: BigNumber | BigNumberish, decimals = 18, formatPrecision = 4) => {
+  if (isNaN(Number(n))) return '-'
   return parseToBigNumber(parseToBigNumber(n).toFixed(decimals))
     .toFormat(formatPrecision)
     .replace(/(\.\d*?[1-9])0+$/, '$1')

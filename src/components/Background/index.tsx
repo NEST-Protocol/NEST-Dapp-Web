@@ -2,7 +2,7 @@ import { Stack } from '@chakra-ui/react'
 import { useEffect, useRef, useState, Suspense } from 'react'
 import * as THREE from 'three'
 import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls, useTexture } from '@react-three/drei'
+import { useTexture } from '@react-three/drei'
 import planet from '../../assets/image/plant.jpg'
 import track from '../../assets/image/track.png'
 
@@ -66,7 +66,6 @@ const Background = () => {
         <directionalLight color="white" position={[20, 20, 20]} intensity={0.12} castShadow />
         <Suspense fallback={null}>
           <PlanetAndTrack rotation={[-0.7, -0.35, 0]} position={width > height ? [-1, -0.5, 1.4] : [-1.5, -1, 0]} />
-          <OrbitControls />
         </Suspense>
       </Canvas>
     </Stack>
