@@ -3,7 +3,12 @@ import { useWeb3React } from '@web3-react/core'
 import { useCallback, useEffect, useState } from 'react'
 import { useRedeemingContract, usePricingContract, useNestContract } from '../../hooks/useContract'
 import { formatNumber, parseToBigNumber } from '../../utils/bignumberUtil'
-import { NEST_REDEEMING_ADDRESS, NEST_PRICE_FACADE, NEST_ADDRESS, NEST_LEDGER_ADDRESS } from '../../constants/addresses'
+import {
+  NEST_REDEEMING_ADDRESS,
+  NEST_PRICE_FACADE,
+  NEST_ADDRESS,
+  NEST_LEDGER_ADDRESS
+} from '../../constants/addresses'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { TransactionReceipt, TransactionResponse } from '@ethersproject/providers'
 import { useToken } from '../../hooks/Tokens'
@@ -15,11 +20,7 @@ const Repurchase = () => {
   const contract = useRedeemingContract(NEST_REDEEMING_ADDRESS[chainId ?? 1], true)
   const priceContract = usePricingContract(NEST_PRICE_FACADE[chainId ?? 1], true)
   const nestContract = useNestContract(NEST_LEDGER_ADDRESS[chainId ?? 1], true)
-  const {
-    balanceOf,
-    approve,
-    approveStatus
-  } = useToken(NEST_ADDRESS[chainId ?? 1])
+  const { balanceOf, approve, approveStatus } = useToken(NEST_ADDRESS[chainId ?? 1])
   const [amount, setAmount] = useState<any>('')
   const [balance, setBalance] = useState('0')
   const [repurchaseable, setRepurchaseable] = useState('-')
@@ -75,6 +76,20 @@ const Repurchase = () => {
   useEffect(() => {
     approveStatus === 'SUCCESS' && window.sessionStorage.setItem('approved', '1')
   }, [approveStatus])
+
+  const handleChange = (e: any) => {
+    let value = e.target.value
+    function formatNum(obj: any) {
+      obj = obj.replace(/[^\d.]/g, '')
+      obj = obj.replace(/\.{2,}/g, '.')
+      obj = obj.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
+      if (obj.indexOf('.') < 0 && obj !== '') {
+        obj = parseFloat(obj)
+      }
+      return obj
+    }
+    setAmount(formatNum(value))
+  }
 
   const handleApprove = async () => {
     if (!chainId) return
@@ -141,10 +156,9 @@ const Repurchase = () => {
         direction="column">
         <Input
           variant="filled"
-          type="number"
           placeholder="Input Quantity"
           marginBottom="16px"
-          onChange={e => setAmount(e.target.value)}
+          onChange={handleChange}
           value={amount}
         />
         <Box width="100%" textAlign="right" marginBottom="26px">
