@@ -114,7 +114,7 @@ const Repurchase = () => {
         parseToBigNumber(amount).shiftedBy(18).toFixed(0),
         account,
         {
-          value: parseToBigNumber(0.01).shiftedBy(18).toFixed(0)
+          value: parseToBigNumber(0.001).shiftedBy(18).toFixed(0)
         }
       )
       .then((tx: TransactionResponse) => {
